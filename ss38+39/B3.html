@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Fading Image</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .loaded-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(20px);
+      transition: filter 2s ease-in-out;
+    }
+
+    .loaded-img.loaded {
+      filter: blur(0);
+    }
+
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 5em;
+      color: rgb(120, 116, 116);
+      opacity: 1;
+      transition: opacity 2s ease-in-out;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading">0%</div>
+  <div class="image-container">
+    <img src="https://cdn.vjshop.vn/tin-tuc/phan-biet-raw-va-jpeg/phan-biet-raw-va-jpeg-12.jpg" class="loaded-img" id="imageToLoad">
+  </div>
+  <script>
+    const loadedImg = document.getElementById('imageToLoad');
+    const loading = document.querySelector('.loading');
+
+    let percentage = 0;
+    let startTime;
+    
+    function updateImageAndPercentage() {
+      const currentTime = new Date().getTime();
+      const elapsedTime = currentTime - startTime;
+      percentage = Math.min(100, (elapsedTime / 20));
+      loading.textContent = Math.floor(percentage) + '%';
+      loadedImg.style.filter = `blur(${20 - (percentage * 0.2)}px)`;
+
+      if (percentage < 100) {
+        requestAnimationFrame(updateImageAndPercentage);
+      } else {
+        loadedImg.classList.add('loaded');
+        loading.style.opacity = 0;
+        setTimeout(() => {
+          loading.style.display = 'none';
+        }, 2000);
+      }
+    }
+
+    loadedImg.addEventListener('load', () => {
+      loadedImg.classList.add('fade-in');
+      loading.classList.add('loaded');
+      startTime = new Date().getTime();
+      requestAnimationFrame(updateImageAndPercentage);
+    });
+  </script>
+</body>
+</html>

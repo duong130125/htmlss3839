@@ -1,0 +1,30 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    border: 10px solid rgb(239, 5, 5);
+}
+
+.search-icon {
+    cursor: pointer;
+    margin-right: 10px; 
+}
+
+.search-input {
+    width: 0;
+    height: 30px;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: 0.2s;
+}
